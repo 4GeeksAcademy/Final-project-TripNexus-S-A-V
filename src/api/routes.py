@@ -93,10 +93,10 @@ def create_user():
         username = data.get('username')
         firstname = data.get('firstname')
         lastname = data.get('lastname')
-        prefix_telephone = data.get('prefix_telephone')
-        telephone = data.get('telephone')
+        phonePrefix = data.get('phonePrefix')
+        phoneNumber = data.get('phoneNumber')
         address = data.get('address')
-        pasaporte = data.get('pasaporte')
+        passport = data.get('passport')
         payment_method = data.get('payment_method')
 
         # Vérifier si l'email et le mot de passe sont fournis
@@ -116,10 +116,10 @@ def create_user():
             username=username,
             firstname=firstname,
             lastname=lastname,
-            prefix_telephone=prefix_telephone,
-            telephone=telephone,
+            phonePrefix=phonePrefix,
+            phoneNumber=phoneNumber,
             address=address,
-            pasaporte=pasaporte,
+            passport=passport,
             payment_method=payment_method,
             is_admin=False  # Vous pouvez définir la valeur par défaut pour is_admin ici
         )
@@ -145,8 +145,8 @@ def create_business_user():
         email = data.get('email')
         password = data.get('password')
         business_name = data.get('business_name')
-        prefix_telephone = data.get('prefix_telephone')
-        telephone = data.get('telephone')
+        phonePrefix = data.get('phonePrefix')
+        phoneNumber = data.get('phoneNumber')
         address = data.get('address')
         nif = data.get('nif')
         payment_method = data.get('payment_method')
@@ -164,7 +164,7 @@ def create_business_user():
         # Hacher le mot de passe et créer l'entreprise
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         new_business = Business_user(business_name=business_name, email=email, password=password_hash,
-                                     prefix_telephone=prefix_telephone, telephone=telephone, nif=nif, address=address, payment_method=payment_method)
+                                     phonePrefix=phonePrefix, phoneNumber=phoneNumber, nif=nif, address=address, payment_method=payment_method)
 
         db.session.add(new_business)
         db.session.commit()
@@ -258,10 +258,10 @@ def update_user_profile(user_id):
         user.username = data['username']
         user.firstname = data['firstname']
         user.lastname = data['lastname']
-        user.prefix_telephone = data['prefix_telephone']
-        user.telephone = data['telephone']
+        user.phonePrefix = data['phonePrefix']
+        user.phoneNumber = data['phoneNumber']
         user.address = data['address']
-        user.pasaporte = data['pasaporte']
+        user.passport = data['passport']
         user.payment_method = data['payment_method']
 
         db.session.commit()
@@ -287,10 +287,10 @@ def update_business_profile(business_id):
         business_user.business_name = data.get(
             'name_business', business_user.business_name)
         business_user.email = data.get('email', business_user.email)
-        business_user.prefix_telephone = data.get(
-            "prefix_telephone", business_user.prefix_telephone)
-        business_user.telephone = data.get(
-            "telephone", business_user.telephone)
+        business_user.phonePrefix = data.get(
+            "phonePrefix", business_user.phonePrefix)
+        business_user.phoneNumber = data.get(
+            "phoneNumber", business_user.phoneNumber)
         business_user.nif = data.get('nif', business_user.nif)
         business_user.address = data.get('address', business_user.address)
         business_user.payment_method = data.get(

@@ -11,10 +11,10 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
-    prefix_telephone = db.Column(db.Integer, nullable=True)
-    telephone = db.Column(db.Integer, nullable=True)
+    phonePrefix = db.Column(db.Integer, nullable=True)
+    phoneNumber = db.Column(db.Integer, nullable=True)
     address = db.Column(db.String(200), nullable=False)
-    pasaporte = db.Column(db.String(50), nullable=False)
+    passport = db.Column(db.String(50), nullable=False)
     payment_method = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
@@ -33,10 +33,10 @@ class User(db.Model):
             "email": self.email,
             "firstname": self.firstname,
             "lastname": self.lastname,
-            "prefix_telephone": self.prefix_telephone,
-            "telephone": self.telephone,
+            "phonePrefix": self.phonePrefix,
+            "phoneNumber": self.phoneNumber,
             "address": self.address,
-            "pasaporte": self.pasaporte,
+            "passport": self.passport,
             "payment_method": self.payment_method,
             "is_admin": self.is_admin
         }
@@ -47,8 +47,8 @@ class Business_user(db.Model):
     business_name = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    prefix_telephone = db.Column(db.Integer, nullable=True)
-    telephone = db.Column(db.Integer, nullable=True)
+    phonePrefix = db.Column(db.Integer, nullable=True)
+    phoneNumber = db.Column(db.Integer, nullable=True)
     nif = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(150), nullable=False)
     payment_method = db.Column(db.String(150), nullable=False)
@@ -63,8 +63,8 @@ class Business_user(db.Model):
             "id": self.id,
             "business_name": self.business_name,
             "email": self.email,
-            "prefix_telephone": self.prefix_telephone,
-            "telephone": self.telephone,
+            "phonePrefix": self.phonePrefix,
+            "phoneNumber": self.phoneNumber,
             "nif": self.nif,
             "address": self.address,
             "payment_method": self.payment_method

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -6,12 +6,14 @@ import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 
 const SignUpBusiness = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
   function handleRedirect() {
     // Redireccionar a la página anterior
     window.history.back();
-}
+  }
 
   return (
     <Formik
@@ -19,6 +21,8 @@ const SignUpBusiness = () => {
         email: "",
         password: "",
         business_name: "",
+        phonePrefix: "",
+        phoneNumber: "",
         nif: "",
         address: "",
         payment_method: "",
@@ -27,13 +31,18 @@ const SignUpBusiness = () => {
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Formato erróneo para el correo electrónico').required('Campo obligatorio'),
         password: Yup.string().min(8, 'Debe tener 8 caracteres o más').required('Campo obligatorio').matches(
-          /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,'Debe contener al menos una mayúscula, un número y un símbolo'),
+          /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Debe contener al menos una mayúscula, un número y un símbolo'),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir')
+          .required('Campo obligatorio'),
         business_name: Yup.string().min(2, 'Debe tener 2 caracteres o más').matches(/^[A-Z][A-Za-z0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula').required('Campo obligatorio'),
+        phonePrefix: Yup.string().required('Campo obligatorio').min(2, "Debe tener mínimo 2 dígitos").max(2, "Debe tener máximoo 2 dígitos"),
+        phoneNumber: Yup.string().min(7, 'Debe tener al menos 7 dígitos').required('Campo obligatorio'),
         nif: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio'),
         address: Yup.string()
-        .min(10, 'Debe tener 10 caracteres o más')
-        .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s- ]*$/, 'Debe comenzar con una letra mayúscula')
-        .required('Campo obligatorio!'),
+          .min(10, 'Debe tener 10 caracteres o más')
+          .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s- ]*$/, 'Debe comenzar con una letra mayúscula')
+          .required('Campo obligatorio!'),
         payment_method: Yup.string().min(2, 'Debe tener 2 caracteres o más').required('Campo obligatorio'),
         acceptTerms: Yup.boolean()
           .required('Campo obligatorio')
@@ -71,9 +80,35 @@ const SignUpBusiness = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Contraseña</label>
-              <Field name="password" type="password" className="form-control" />
+              <div className="input-group">
+                <Field name="password" type={showPassword ? 'text' : 'password'} className="form-control" />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? 'Ocultar' : 'Mostrar'}
+                </button>
+              </div>
               <ErrorMessage name="password" />
             </div>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">Confirmar Contraseña</label>
+              <div className="input-group">
+                <Field name="confirmPassword" type={showConfirmPassword ? 'text' : 'password'} className="form-control" />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? 'Ocultar' : 'Mostrar'}
+                </button>
+              </div>
+              <ErrorMessage name="confirmPassword" />
+            </div>
+
+
+
             <div className="mb-3">
               <label htmlFor="business_name" className="form-label">Nombre de la empresa</label>
               <Field name="business_name" type="text" className="form-control" />
@@ -88,6 +123,16 @@ const SignUpBusiness = () => {
               <label htmlFor="address" className="form-label">Dirección</label>
               <Field name="address" type="text" className="form-control" />
               <ErrorMessage name="address" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="phonePrefix" className="form-label">Prefijo Telefónico</label>
+              <Field name="phonePrefix" type="text" className="form-control" />
+              <ErrorMessage name="phonePrefix" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="phoneNumber" className="form-label">Número de Teléfono</label>
+              <Field name="phoneNumber" type="text" className="form-control" />
+              <ErrorMessage name="phoneNumber" />
             </div>
             <div className="mb-3" id="payment-radio" role="group" aria-labelledby="payment-radio">
               <label htmlFor="payment_method" className="form-label">Método de pago</label>

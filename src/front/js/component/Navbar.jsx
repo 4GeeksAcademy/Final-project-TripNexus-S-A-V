@@ -1,7 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import LogIn from '../pages/LogIn.jsx';
+import LogIn from "./LogIn.jsx";
 import { Link } from 'react-router-dom';
 import { Context } from "../store/appContext";
+
+
+
+
 const Navbar = () => {
   const { store, actions } = useContext(Context);
   function handleLogout() {

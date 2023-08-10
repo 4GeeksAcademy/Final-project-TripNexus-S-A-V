@@ -6,7 +6,7 @@ import axios from 'axios';
 import ImagePreview from './ImagePreview.jsx';
 
 
-const FormReview = () => {
+const FormReview = ({currentReviewModal}) => {
   const { store, actions } = useContext(Context);
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -65,7 +65,7 @@ const FormReview = () => {
           {store.auth ? (
             <div className="div-form-review-content">
               <Form className="form-review-content" onSubmit={formik.handleSubmit}>
-                <div className="title-form-review">
+                {currentReviewModal === 1 && (<><div className="title-form-review">
                   <label htmlFor="title">Títutlo:</label>
                   <Field type="text" name="title" value={formik.values.title} />
                   <ErrorMessage name='title' />
@@ -74,8 +74,9 @@ const FormReview = () => {
                   <label htmlFor="comment_text">Comentario:</label>
                   <Field type="text" name="comment_text" value={formik.values.comment_text} />
                   <ErrorMessage name='comment_text' />
-                </div>
-                <div>
+                </div></>)}
+                
+                { currentReviewModal === 2 && (                <div>
                   <label htmlFor="review_image">Publica tu foto aquí:</label>
                   <input
                     type="file"
@@ -88,9 +89,10 @@ const FormReview = () => {
                   />
                   <ErrorMessage name="review_image" />
                   {selectedFile && <ImagePreview file={selectedFile} />}
-                </div>
+                </div>)}
 
-                <button className='btn-review' type="submit">Publicar mi reseña</button>
+                {currentReviewModal === 2 && (  <button className='btn btn-primary btn-signup' type="submit">Publicar mi reseña</button>)}
+              
               </Form>
             </div>
           ) : null}

@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import LogIn from "./pages/LogIn.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx"
 import UserPrivate from "./pages/UserPrivate.jsx";
 import BusinessUserPrivate from "./pages/BusinessUserPrivate.jsx";
@@ -54,7 +53,6 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<SignupGeneralView />} path="/signup" />
-                        <Route element={<LogIn />} path="/login" />
                         <Route element={<ForgotPassword />} path="/forgot_password" />
                         <Route element={<ContactForm />} path="/contact" />
                         <Route element={<UserPrivate />} path="/user/private" />
