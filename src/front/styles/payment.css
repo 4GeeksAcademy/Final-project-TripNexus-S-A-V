@@ -19,3 +19,13 @@
   white-space: nowrap;
   background-color: blue;
 }
+
+.btn-paypal-donation {
+  width: 1rem;
+}
+
+.don {
+  width: 1rem;
+  height: .5rem;
+  margin: auto;
+}

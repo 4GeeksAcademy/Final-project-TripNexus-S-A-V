@@ -16,14 +16,13 @@ const HomeReviewCard = () => {
                 <h1><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h1>
             </div> */}
 
-                <div className='homeReviewCard'>
+            <div className='homeReviewCard'>
 
-                    {store.reviews
+                {store.reviews
                     .slice(0, 10)
-                    .map((review) => 
+                    .map((review) =>
                         <div key={review.id} className="card-home-review" style={{ maxWidth: "400px", maxHeight: "500px" }} >
                             <Link to={`/review/${review.id}`} >
-
                                 <div className="card bg-dark text-white my-4" style={{ height: "16rem", width: "20rem" }}>
                                     <img src={review.review_image} className="card-img" alt="..." style={{ maxWidth: "400px", maxHeight: "200px" }}></img>
                                     <div className="card-img-overlay">
@@ -32,10 +31,10 @@ const HomeReviewCard = () => {
                                         <p>By {review.user.username}</p>
                                         {/* <p className="card-text">Last updated 3 mins ago</p> */}
                                     </div>
-                                    </div>
+                                </div>
                             </Link>
                         </div>
-                )}
+                    )}
             </div>
 
         </div >

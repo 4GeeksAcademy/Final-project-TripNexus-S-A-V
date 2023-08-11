@@ -10,7 +10,7 @@
 .card-review {
     background: var(--color-3);
     backdrop-filter: 10px;
-    height: 350px !important;
+    height: 27rem !important;
     width: calc(25% - 20px);
     margin-bottom: 20px;
     position: relative;
@@ -59,10 +59,6 @@
 }
 
 .card-likes {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     padding: 10px;
     background-color: var(--color-2);
     color: white;
@@ -122,6 +118,14 @@
 .nav-review button {
     width: 100%;
     display: block;
+}
+
+.donation-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateX(20%);
 }
 
 /* Media query */

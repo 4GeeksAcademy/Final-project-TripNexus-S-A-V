@@ -3,6 +3,8 @@ import { Context } from "../store/appContext";
 import Likes from "./Likes";
 import useReviewManagement from "../hooks/useReviewManagement";
 import FavoriteReview from "./FavoriteReview";
+import { Link } from "react-router-dom";
+import Donation from "./Donation";
 
 const CardsReview = ({ searchQuery }) => {
   const { store, actions } = useContext(Context)
@@ -28,7 +30,7 @@ const CardsReview = ({ searchQuery }) => {
               className="card card-review text-white mt-4 container"
               style={{ height: "16rem", width: "20rem" }}
             >
-            <img src={review.review_image} className="card-img-top" alt="..."></img>
+              <img src={review.review_image} className="card-img-top" alt="..."></img>
 
 
               <div className="div-title-review">
@@ -58,7 +60,12 @@ const CardsReview = ({ searchQuery }) => {
                   <button onClick={() => handleSave(review.id)}>Validar</button>
                 </>
               ) : (
-                <p className="card-text">{review.comment_text}</p>
+                <div>
+                  <p className="card-text">{review.comment_text}</p>
+                  <span className="author-review">
+                    Escrito por: <span>{review.user.username}</span>{" "}
+                  </span>
+                </div>
               )}
 
               {store.user.id === review.user.id && (
@@ -79,11 +86,11 @@ const CardsReview = ({ searchQuery }) => {
                 </div>
               )}
               <div className="likes card-likes">
-                <span className="author-review">
-                  Escrito por : <span>{review.user.username}</span>{" "}
-                </span>
                 <FavoriteReview reviewId={review.id} />
                 <Likes reviewId={review.id} />
+              </div>
+              <div className="donation-content">
+                <Donation review={review} />
               </div>
             </div>
           ))}

@@ -5,16 +5,16 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 const PaymentOptions = () => {
-  const { store, actions } = useContext(Context)
-  const [offer, setOffer] = useParams({})
+  // const { store, actions } = useContext(Context)
+  // const [offer, setOffer] = useParams({})
 
-  useEffect(() => {
-    const loadData = async () => {
-      setOffer(await actions.getOfferById(params.offer_id))
-    }
-    loadData()
-    console.log('Fetch data offer for paypal OK');
-  }, [])
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     setOffer(await actions.getOfferById(params.offer_id))
+  //   }
+  //   loadData()
+  //   console.log('Fetch data offer for paypal OK');
+  // }, [])
 
   const product = {
     description: "Learn how to build a website with React JS",

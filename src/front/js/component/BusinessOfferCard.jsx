@@ -140,10 +140,6 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     </>
                   }
                 </div>
-                {/* <GooglePayButton
-                  normalUserPrice={business_offer.normal_user_price}
-                  premiumUserPrice={business_offer.premium_user_price}
-                /> */}
                 <Link to='/opciones-de-pago'>
                   <button className='btn-buy'>Comprar</button>
                 </Link>
