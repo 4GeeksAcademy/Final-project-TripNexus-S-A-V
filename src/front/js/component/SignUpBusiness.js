@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import Swal from "sweetalert2";
 
 const SignUpBusiness = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -59,16 +60,33 @@ const SignUpBusiness = () => {
           .oneOf([true], 'Debes aceptar los términos y condiciones para registrarte'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        console.log("Form submitted:", values);
+        // console.log("Form submitted:", values);
         actions.signupBusiness(values)
           .then(() => {
-            console.log("Form submitted successfully!");
-            alert("Tu registro fue todo un éxito!!! Revisa tu correo electrónico.");
-            navigate("/reviews");
+
+            //console.log("Form submitted successfully!");
+            Swal.fire({
+              title: "Exitoso",
+              text: "Tu registro fue todo un éxito!!! Revisa tu correo electrónico.",
+              icon: "success",
+              timer: 1000
+            });
+            setTimeout(() => {
+              navigate("/reviews");
+            }, 1000);
+
           })
           .catch((error) => {
             console.error("Error submitting form:", error);
-            alert("Email already exists");
+
+            setTimeout(() => {
+              Swal.fire({
+                title: "Error",
+                text: "Email already exists",
+                icon: "error",
+                timer: 1000
+              });
+            }, 1000);
           })
           .finally(() => {
             setSubmitting(false);
@@ -176,7 +194,7 @@ const SignUpBusiness = () => {
               </div>
               <div>
 
-                <ErrorMessage name="phone_prefix" /> <br />
+                <ErrorMessage className="ErrorMessage" name="phone_prefix" /> <br />
                 <ErrorMessage name="phone_number" />
               </div>
 
@@ -195,18 +213,18 @@ const SignUpBusiness = () => {
                 <ErrorMessage name="payment_method" component="div" className="error-message" />
               </div>
               <div className="d-flex">
-                  <div className="me-2">
+                <div className="me-2">
                   <Field type="checkbox" name="acceptTerms" />
-                  </div>
-                  <div>
-                    <span> Acepto los
+                </div>
+                <div>
+                  <span> Acepto los
                     <Link to="/terms">
                       <strong> términos y condiciones</strong>
                     </Link>
-                    </span>
-                  </div>
-  
-              
+                  </span>
+                </div>
+
+
               </div>
               <ErrorMessage name="acceptTerms" />
               <button type="submit" className="btn btn-primary reset-button-signup mt-2">Crear mi cuenta</button>

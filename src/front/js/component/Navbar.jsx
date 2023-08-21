@@ -2,19 +2,28 @@ import React, { useContext, useState, useEffect } from "react";
 import LogIn from '../pages/LogIn.jsx';
 import { Link } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import Swal from "sweetalert2";
 const Navbar = () => {
   const { store, actions } = useContext(Context);
   function handleLogout() {
-    alert('Cerraste sesión. Esperamos verte pronto!');
-    actions.logout();
-    window.location.href = '/';
+    Swal.fire({
+      title: 'Cerraste sesión.',
+      text: 'Esperamos verte pronto!',
+      icon: 'info',
+      timer: 1000
+    });
+
+    setTimeout(() => {
+      actions.logout();
+      window.location.href = '/';
+    }, 1000);
   }
   return (
     <nav className="navbar container-fluid navbar-expand navbar-light">
 
       <div className="container-fluid">
         <Link className="navbar-brand" to='/'>
-          <img src="https://res.cloudinary.com/albertge/image/upload/v1691882080/TRIP%20NEXUS/Texto_del_p%C3%A1rrafo_c411q0.png" width="70" height="65" alt="Logo"></img>
+          <img src="https://res.cloudinary.com/albertge/image/upload/v1692380821/Texto_del_p%C3%A1rrafo_1_eic8kp.png" width="70" height="65" alt="Logo"></img>
         </Link>
         <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul className="navbar-nav">
@@ -41,9 +50,7 @@ const Navbar = () => {
                 <li><Link to='/reviews' className="dropdown-item">Reseñas</Link></li>
                 <li><Link to='/offers' className="dropdown-item">Ofertas</Link></li>
                 <li><Link to='/trips' className="dropdown-item">Explora tu siguiente trip</Link></li>
-                <li><Link className="dropdown-item">Ayuda</Link></li>
-
-                {/* <li><Link to='/contact' className="dropdown-item">Contacto</Link></li> */}
+                <li><Link to='/contact' className="dropdown-item">Contacto</Link></li>
 
                 {store.user.is_admin && <li><Link to='/admin' className="dropdown-item">Espacio Administrador</Link></li>}
 

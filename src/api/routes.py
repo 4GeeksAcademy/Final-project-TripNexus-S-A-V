@@ -380,6 +380,7 @@ def create_offer():
             # trip_id=data['trip_id'],
             business_id=business_user.id,
             offer_title=data['offer_title'],
+            offer_little_description=data['offer_little_description'],
             offer_description=data['offer_description'],
             country=data['country'],
             city=data['city'],
@@ -406,9 +407,10 @@ def update_offer(offer_id):
 
     data = request.get_json()
     try:
-        offer.trip_id = data['trip_id']
-        offer.business_id = data['business_id']
+        offer.trip_id = data['trip_id'],
+        offer.business_id = data['business_id'],
         offer.offer_title = data['offer_title'],
+        offer.offer_little_description = data['offer_little_description'],
         offer.offer_description = data['offer_description'],
         offer.country = data['country'],
         offer.city = data['city'],
@@ -486,7 +488,10 @@ def update_trip(trip_id):
     try:
         trip.country = data['country']
         trip.city = data['city']
-        trip.activity = data['activity']
+        trip.city2 = data['city']
+        trip.city3 = data['city']
+        trip.city4 = data['city']
+
         db.session.commit()
         return jsonify(trip.serialize()), 200
     except KeyError:
@@ -523,6 +528,15 @@ def get_review(review_id):
     return jsonify(review=review.serialize()), 200
 
 
+@api.route('/offer/<int:offer_id>/reviews/', methods=['GET'])
+def get_offer_reviews(offer_id):
+    reviews = Review.query.filter_by(offer_id=offer_id).all()
+    if len(reviews) < 1:
+        return jsonify({"message": "No reviews for this offer"}), 404
+    serialized_reviews = [review.serialize() for review in reviews]
+    return jsonify(serialized_reviews), 200
+
+
 @api.route('/review', methods=['POST'])
 @jwt_required()
 def create_review():
@@ -534,11 +548,12 @@ def create_review():
     try:
         review = Review(
             user_id=user.id,
+            offer_id=data['offer_id'],
             title=data['title'],
             comment_text=data['comment_text'],
             review_image=data['review_image'],
-            country = data['country'],
-            city = data['city'],
+            country=data['country'],
+            city=data['city'],
         )
         db.session.add(review)
         db.session.commit()
@@ -557,13 +572,11 @@ def update_review(review_id):
     data = request.get_json()
     try:
         review.user_id = data['user_id']
-        review.trip_id = data['trip_id']
         review.title = data['title']
         review.comment_text = data['comment_text']
         review.review_image = data['review_image']
         review.country = data['country']
         review.city = data['city']
-
 
         db.session.commit()
         return jsonify(review.serialize()), 200

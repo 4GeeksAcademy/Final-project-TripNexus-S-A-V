@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import ImagePreview from './ImagePreview.jsx';
 import Draggable from 'react-draggable';
+import Swal from 'sweetalert2';
 
 
 const OffersDoubleModal = () => {
@@ -14,7 +15,7 @@ const OffersDoubleModal = () => {
 
     useEffect(() => {
         actions.getAllTrips();
-        console.log("Fetch for all trips is working")
+        // console.log("Fetch for all trips is working")
     }, []);
 
     return (
@@ -22,6 +23,7 @@ const OffersDoubleModal = () => {
         <Formik
             initialValues={{
                 offer_title: "",
+                offer_little_description: "",
                 offer_description: "",
                 country: "",
                 city: "",
@@ -32,11 +34,17 @@ const OffersDoubleModal = () => {
             validationSchema={Yup.object({
                 offer_title: Yup.string()
                     .min(10, 'Debe tener 10 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .required('Campo obligatorio!'),
+                offer_little_description: Yup.string()
+                    .min(10, 'Debe tener 10 caracteres o más')
+                    .max(70, 'Máximo 100 carácteres. Intenta resumir al máximo la esencia de la oferta ')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 offer_description: Yup.string()
                     .min(50, 'Debe tener 50 caracteres o más')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .max(3000, 'Máximo 3000 carácteres')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 country: Yup.string()
                     // .min(2, 'Debe tener 2 caracteres o más')
@@ -77,16 +85,33 @@ const OffersDoubleModal = () => {
 
                     await actions.createOffer({ ...values, offer_image: imgUrl });
 
-                    console.log("Form submitted successfully!");
-                    alert('Tu oferta se publicó correctamente');
+
+                    //console.log("Form submitted successfully!");
+                    Swal.fire({
+                        title: "¡Oferta publicada!",
+                        text: "Tu oferta se publicó correctamente",
+                        icon: "success",
+                        timer: 1000
+                    });
+
                     setStatus({ success: true });
                     setSelectedFile(null);
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
 
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    alert("Alguna cosa salió mal");
                     setStatus({ error: true });
+
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Algo salió mal.",
+                            icon: "error",
+                            timer: 1000
+                        });
+                    }, 1000);
                 } finally {
                     setSubmitting(false);
                 }
@@ -96,7 +121,7 @@ const OffersDoubleModal = () => {
                 <div>
                     <div>
                         <Draggable>
-                            <button className="btn btn-primary floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                            <button type="button" className="btn floating-button" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
                                 Publica tu oferta
                             </button>
                         </Draggable>
@@ -106,7 +131,7 @@ const OffersDoubleModal = () => {
 
 
                             {/* Primer Modal */}
-                            <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+                            <div className="modal fade " id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                                 <div className="modal-dialog modal-dialog-centered">
                                     <div className="modal-content content-signup">
                                         <div className="modal-header">
@@ -119,13 +144,11 @@ const OffersDoubleModal = () => {
                                                     <div className='custom-input-password'>
                                                         <label htmlFor="country" >País:</label><br />
                                                         <Field as="select" name="country">
-                                                            <option key={store.trip.id} value="" label="Selecciona un país" />
-                                                            {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (<>
-
+                                                            <option value="" label="Selecciona un país" />
+                                                            {store.trip && store.trip.length >= 1 && store.trip?.map((country) => (
                                                                 <option key={country?.id} value={country?.country}>
                                                                     {country?.country}
                                                                 </option>
-                                                            </>
                                                             ))}
                                                         </Field>
                                                     </div>
@@ -135,15 +158,29 @@ const OffersDoubleModal = () => {
                                                     <div>
                                                         <label htmlFor="city" >Ciudad:</label><br />
                                                         <Field as="select" name="city">
-                                                            <option key={store.trip.id} value="" label="Selecciona una ciudad" />
+                                                            <option value="" label="Selecciona una ciudad" />
                                                             {store.trip && store.trip.length >= 1 && store.trip.map((city) => (
                                                                 city.country === formik.values.country && (
-                                                                    <option key={city?.id} value={city?.city}>
-                                                                        {city?.city}
-                                                                    </option>
+
+                                                                    <React.Fragment key={`${city.country}-${city.city}`}>
+                                                                        <option value={city?.city}>
+
+                                                                            {city?.city}
+                                                                        </option>
+                                                                        <option value={city?.city2}>
+                                                                            {city?.city2}
+                                                                        </option>
+                                                                        <option value={city?.city3}>
+                                                                            {city?.city3}
+                                                                        </option>
+                                                                        <option value={city?.city4}>
+                                                                            {city?.city4}
+                                                                        </option>
+                                                                    </React.Fragment>
                                                                 )
                                                             ))}
                                                         </Field>
+
 
                                                     </div>
                                                     <ErrorMessage name="city" />
@@ -156,10 +193,26 @@ const OffersDoubleModal = () => {
                                                 <ErrorMessage name="offer_title" />
                                             </div>
                                             <div className='custom-input-password'>
-                                                <label htmlFor="offer_description" className={formik.values.offer_description ? 'input-label has-value' : 'input-label'}>Descripción de la oferta:</label>
-                                                <Field type="text" name="offer_description" />
-                                                <ErrorMessage name="offer_description" />
+                                                <label htmlFor="offer_little_description" className={formik.values.offer_little_description ? 'input-label has-value' : 'input-label'}>Escribe una breve descripción de tu oferta:</label>
+                                                <Field
+                                                    as="textarea"
+                                                    name="offer_little_description"
+                                                    className={formik.values.offer_little_description ? 'expanding-textarea' : 'expanding-textarea input-placeholder'}
+                                                />
+                                                <ErrorMessage name="offer_little_description" />
                                             </div>
+
+                                            <div className='custom-input-password'>
+                                                <label htmlFor="offer_description" className={formik.values.offer_description ? 'input-label has-value' : 'input-label'}>
+                                                    Escribe la información detallada de la oferta:</label>
+                                                <Field
+                                                    as="textarea"
+                                                    name="offer_description"
+                                                    className={formik.values.offer_description ? 'expanding-textarea' : 'expanding-textarea input-placeholder'}
+                                                />
+                                                <ErrorMessage style={{ color: 'red' }} name="offer_description" />
+                                            </div>
+
 
                                             <div className='custom-input-password'>
                                                 <label htmlFor="normal_user_price" className={formik.values.normal_user_price ? 'input-label has-value' : 'input-label'}>Precio para Usuario:</label>
@@ -172,7 +225,7 @@ const OffersDoubleModal = () => {
                                                 <ErrorMessage name="premium_user_price" />
                                             </div>
                                             <div className='modal-footer'>
-                                                <button className="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Siguiente</button>
+                                                <button type='button' className="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Siguiente</button>
                                             </div>
 
                                         </div>
@@ -205,10 +258,11 @@ const OffersDoubleModal = () => {
                                                 {selectedFile && <ImagePreview file={selectedFile} />}
                                             </div>
                                             <div className='modal-footer'>
-                                                <button className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >Volver al formulario anterior</button>
+                                                <button type="button" className="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" >Volver al formulario anterior</button>
                                                 <button type="submit" className="btn btn-primary btn-signup">
                                                     Publicar mi oferta
-                                                </button>                                            </div>
+                                                </button>
+                                            </div>
 
                                         </div>
                                     </div>

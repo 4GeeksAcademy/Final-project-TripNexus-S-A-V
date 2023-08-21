@@ -30,7 +30,8 @@ const MyOffers = ({ searchQuery }) => {
                             key={business_offer.id}
                             className="card card-offer mb-3 mt-4">
                             <Link to={`/offer/${business_offer.id}`}>
-                            <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
+                                <img src={business_offer.offer_image} className="card-img-top" alt="..."></img>
+                            </Link>
                             <div className="card-body">
                                 <div className="div-title-offer">
                                     {editContentId === business_offer.id ? (
@@ -44,8 +45,8 @@ const MyOffers = ({ searchQuery }) => {
                                     )}
                                 </div>
                                 <div className='infos-country'>
-                                    <p className="card-text country-offer">{business_offer.country}</p>
-                                    <p className="card-text city-offer">{business_offer.city}</p>
+                                    <p className="card-text country-offer">País:{business_offer.country}</p>
+                                    <p className="card-text city-offer">Ciudad:{business_offer.city}</p>
                                 </div>
                                 {editContentId === business_offer.id ? (
                                     <div className="comment-review">
@@ -60,7 +61,7 @@ const MyOffers = ({ searchQuery }) => {
                                         ></textarea>
                                     </div>
                                 ) : (
-                                    <p className="card-text">{business_offer.offer_description}</p>
+                                    <p className="card-text">{business_offer.offer_little_description}</p>
                                 )}
                                 <div className='offer-price'>
                                     {editContentId === business_offer.id ? (
@@ -86,42 +87,37 @@ const MyOffers = ({ searchQuery }) => {
 
                                         </div>
                                     ) : (
-                                        <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                                        <p className="card-text price-user"><u>Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></u></p>
                                     )}
                                 </div>
                                 {store.business_user.id === business_offer.business_id.id &&
                                     // || store.user.is_admin 
-                                    <div className="btn-options d-flex justify-content-end">
+                                    <div className="btn-options btn-op-offer-div  d-flex justify-content-end">
                                         <button
-                                            className="btn-up-offer"
+                                            className="btn-op-offer btn-up-offer"
                                             onClick={() => handleUpdate(business_offer.id)}
                                         >
                                             &#9998;
                                         </button>
                                         <button
-                                            className="btn-delete-offer"
+                                            className=" btn-op-offer btn-delete-offer"
                                             onClick={() => handleDelete(business_offer.id)}
                                         >
                                             &#10008;
                                         </button>
                                     </div>
-
                                 }
 
-                                {/* <GooglePayButton
-                    normalUserPrice={business_offer.normal_user_price}
-                    premiumUserPrice={business_offer.premium_user_price}
-                  /> */}
-                                {/* <Link to='/opciones-de-pago'>
-                                    <button className='btn-buy'>Comprar</button>
-                                </Link> */}
+                                <Link to={`/offer/${business_offer.id}`}>
+                                    <button className='btn-details-big'>Detalles</button>
+                                </Link>
 
                             </div>
-                            </Link>
+
                         </div>
-                   
-    )
-})}
+
+                    )
+                })}
         </div >
     );
 };

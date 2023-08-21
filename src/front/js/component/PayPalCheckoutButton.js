@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import Swal from 'sweetalert2';
 
 const PaypalCheckoutButton = (props) => {
   const { product } = props;
@@ -12,11 +13,25 @@ const PaypalCheckoutButton = (props) => {
   }
 
   if (paidFor) {
-    alert("Disfruta del viaje!");
+    setTimeout(() => {
+      Swal.fire({
+        title: "¡Disfruta del viaje!",
+        text: "Disfruta del viaje!",
+        icon: "success",
+        timer: 1000
+      });
+    }, 1000);
   }
 
   if (error) {
-    alert(error);
+    setTimeout(() => {
+      Swal.fire({
+        title: "Error",
+        text: error,
+        icon: "error",
+        timer: 1000
+      });
+    }, 1000);
   }
 
   return (
@@ -52,13 +67,13 @@ const PaypalCheckoutButton = (props) => {
           }}
           onApprove={async (data, action) => {
             const order = await action.order.capture();
-            console.log("order", order);
+            // console.log("order", order);
             handleApprove(data.orderID);
           }}
           onCancel={() => { }}
           onError={(err) => {
             setError(err);
-            console.log("PayPal Checkout onError", err);
+            // console.log("PayPal Checkout onError", err);
           }}
         />
       </div>

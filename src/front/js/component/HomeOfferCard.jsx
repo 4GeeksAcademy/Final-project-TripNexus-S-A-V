@@ -1,42 +1,63 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../store/appContext.js'
 import { Link } from 'react-router-dom';
+
 const HomeOfferCard = () => {
     const { store, actions } = useContext(Context);
+    const [randomOffers, setRandomOffers] = useState([]);
+
     useEffect(() => {
         actions.getAllOffers();
-        console.log("Fetch for all offers is working")
     }, []);
+
+    useEffect(() => {
+        if (store.offers.length > 0) {
+            const shuffledOffers = [...store.offers];
+            for (let i = shuffledOffers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOffers[i], shuffledOffers[j]] = [shuffledOffers[j], shuffledOffers[i]];
+            }
+            setRandomOffers(shuffledOffers);
+        }
+    }, [store.offers]);
+
     return (
         <div>
-            {/* <div>
-                <h1><strong>Disfruta de las experiencias,</strong> encuentra excursiones y tours</h1>
-            </div> */}
+            <div className='home-offer-h1'>
+                <h3><strong>Disfruta de las experiencias,</strong> encuentra excursiones y tours</h3>
+            </div>
+
             <div className='home-offer-card'>
 
-                {store.offers
-                    .slice(0, 10)
-                    .map((offer) =>
-                        <div key={offer.id} className="card card-home-offer bg-dark text-white mt-" style={{ maxWidth: "400px", maxHeight: "500px" }} >
-                            <Link to={`/offer/${offer.id}`}>
-                                <img src={offer.offer_image} className="card-img" alt="..." style={{ maxWidth: "400px", maxHeight: "200px" }}></img>
-                                <div className="card-img-overlay">
-                                    <h5 className="home-offer-title">{offer.offer_title}</h5>
-                                    {/* <p className="card-text">{offer.offer_description}</p> */}
-                                    <div className='home-price'>
-                                        <p className="card-text">{offer.normal_user_price.toLocaleString()}$</p>
-                                        <p className="card-text">{offer.premium_user_price.toLocaleString()}$</p>
+
+
+                {randomOffers
+                
+                    .slice(0, 3)
+                    .sort(() => Math.random() - 0.5) // Orden aleatorio
+                    .map((offer) => (
+                        <div key={offer.id} className='card-transition'>
+                            <div className="card-home-offer">
+                                <Link to={`/offer/${offer.id}`}>
+                                    <img src={offer.offer_image} className="" alt="..." />
+                                    <div className="card-home-text mt-1">
+                                        <p>Actividades</p>
+                                        <h2 className="home-offer-title">{offer.offer_title}</h2>
+                                        <div className='home-prices'>
+                                            <p className="">Precio normal: {offer.normal_user_price.toLocaleString()}$</p>
+                                            <p className="second-span">Precio premium: {offer.premium_user_price.toLocaleString()}$</p>
+                                            <span style={{ color: 'purple' }}>Ver actividad &#10095; </span>
+                                        </div>
                                     </div>
-                                    {/* <p className="card-text">Last updated 3 mins ago</p> */}
-                                </div>
-                            </Link>
+                                </Link>
+                            </div>
                         </div>
-                    )}
+                    ))}
             </div>
         </div>
+    );
+};
 
-    )
-}
-export default HomeOfferCard
+export default HomeOfferCard;
 
 

@@ -63,8 +63,8 @@ const CardsReview = ({ searchQuery }) => {
                 </div>
               </div>
 
-              {store.user.id === review.user.id && (
-                <div className="btn-options d-flex justify-content-end">
+              {store.user.is_admin  && (
+                <div className="btn-review-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"
                     onClick={() => handleUpdate(review.id)}
@@ -82,10 +82,14 @@ const CardsReview = ({ searchQuery }) => {
 
               <div className="likes card-likes">
                 <span className="author-review">
-                  Escrito por : <span>{review.user.username}</span>{" "}
+                  Publicado por : <span>{review.user.username}</span>{" "}
                 </span>
-                <FavoriteReview reviewId={review.id} />
-                <Likes reviewId={review.id} />
+                <div className="icons-review d-flex align-items-center justify-content-around">
+                  <span className="me-3">
+                    <FavoriteReview reviewId={review.id} />
+                  </span>
+                  <Likes reviewId={review.id} />
+                </div>
               </div>
             </div>
           ))}

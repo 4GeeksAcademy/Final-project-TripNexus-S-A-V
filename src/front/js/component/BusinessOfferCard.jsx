@@ -4,6 +4,7 @@ import GooglePay from './GooglePay';
 import { Link } from 'react-router-dom';
 import useOfferManagement from '../hooks/useOfferManagement';
 import FavoriteOffer from './FavoriteOffer.jsx';
+import ReviewsDoubleModal from './ReviewsDoubleModal.jsx';
 
 const BusinessOfferCard = ({ searchQuery }) => {
   const { store, actions } = useContext(Context);
@@ -42,8 +43,8 @@ const BusinessOfferCard = ({ searchQuery }) => {
                   )}
                 </div>
                 <div className='infos-country'>
-                  <p className="card-text country-offer">{business_offer.country}</p>
-                  <p className="card-text city-offer">{business_offer.city}</p>
+                  <p className="card-text country-offer">País:{business_offer.country}</p>
+                  <p className="card-text city-offer">Ciudad:{business_offer.city}</p>
                 </div>
                 {editContentId === business_offer.id ? (
                   <div className="comment-review">
@@ -58,7 +59,7 @@ const BusinessOfferCard = ({ searchQuery }) => {
                     ></textarea>
                   </div>
                 ) : (
-                  <p className="card-text">{business_offer.offer_description}</p>
+                  <p className="card-text">{business_offer.offer_little_description}</p>
                 )}
                 <div className='offer-price'>
                   {editContentId === business_offer.id ? (
@@ -84,42 +85,50 @@ const BusinessOfferCard = ({ searchQuery }) => {
 
                     </div>
                   ) : (
-                    <p className="card-text price-user">Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></p>
+                    <p className="card-text price-user"><u>Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></u></p>
                   )}
                 </div>
+
                 {store.business_user.id === business_offer.business_id.id || store.user.is_admin &&
                   // || store.user.is_admin 
 
-                  <div className="btn-options d-flex justify-content-end">
+                  <div className="btn-options d-flex justify-content-end" style={{ position: 'relative' }}>
                     <button
-                      className="btn-up-offer"
+                      className="btn-up-review"
                       onClick={() => handleUpdate(business_offer.id)}
                     >
                       &#9998;
                     </button>
                     <button
-                      className="btn-delete-offer"
+                      className="btn-delete-review"
                       onClick={() => handleDelete(business_offer.id)}
                     >
                       &#10008;
                     </button>
+
                   </div>
-
                 }
-
-                {/* <GooglePayButton
-                  normalUserPrice={business_offer.normal_user_price}
-                  premiumUserPrice={business_offer.premium_user_price}
-                /> */}
+                <Link to={`/offer/${business_offer.id}`}>
+                  <button className='btn-details'>Detalles</button>
+                </Link>
                 {store.user.username && <>
-                  <FavoriteOffer offerId={business_offer.id} />
-                  <Link to={`/offer/${business_offer.id}`}>
-                    <button className='btn-buy'>Ver más</button>
-                  </Link>
 
+
+                  <div className="fav-offer-div">
+                    <div className="fav-offer-container">
+                      <span className="fav-offer-span">
+                        <FavoriteOffer offerId={business_offer.id} />
+                      </span>
+                    </div>
+                  </div>
+                  <Link to='/opciones-de-pago'>
+                    <button className='btn-buy'>Comprar</button>
+                  </Link>
+                  {/* <Link to={`/offer/${business_offer.id}`}>
+                    <button className='btn-publish-review'>Publica tu reseña</button>
+                  </Link> */}
 
                 </>
-
                 }
 
               </div>

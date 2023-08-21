@@ -82,10 +82,13 @@ class Trip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     country = db.Column(db.String(40), nullable=False)
     city = db.Column(db.String(40), nullable=False)
+    city2 = db.Column(db.String(40), nullable=False)
+    city3 = db.Column(db.String(40), nullable=False)
+    city4 = db.Column(db.String(40), nullable=False)
+
     # activity = db.Column(db.String(100), nullable=True)
 
     offers = db.relationship("Offers", backref="trip")
-    review = db.relationship("Review", backref="trip")
     favorites = db.relationship('Favorites', backref='trip')
 
     def __repr__(self):
@@ -96,6 +99,9 @@ class Trip(db.Model):
             "id": self.id,
             "country": self.country,
             "city": self.city,
+            "city2": self.city2,
+            "city3": self.city3,
+            "city4": self.city4,
             # "activities": self.activities
         }
 
@@ -106,7 +112,8 @@ class Offers(db.Model):
     business_id = db.Column(db.Integer, ForeignKey(
         'business_user.id'), nullable=True)
     offer_title = db.Column(db.String(75), nullable=False)
-    offer_description = db.Column(db.String(250), nullable=False)
+    offer_little_description = db.Column(db.String(100), nullable=True)
+    offer_description = db.Column(db.String(5000), nullable=False)
     country = db.Column(db.String(250), nullable=False)
     city = db.Column(db.String(250), nullable=False)
     normal_user_price = db.Column(db.Integer, nullable=False)
@@ -115,6 +122,7 @@ class Offers(db.Model):
     premium_user_price = db.Column(db.Integer, nullable=False)
     offer_image = db.Column(db.String(1000), nullable=False)
 
+    reviews = db.relationship('Review', backref='offers')
     favorites = db.relationship('Favorites', backref='offers')
 
     def __repr__(self):
@@ -125,6 +133,7 @@ class Offers(db.Model):
             "id": self.id,
             "trip_id": self.trip_id,
             "business_id": Business_user.query.get(self.business_id).serialize(),
+            "offer_little_description": self.offer_little_description,
             "offer_title": self.offer_title,
             "offer_description": self.offer_description,
             "country": self.country,
@@ -140,7 +149,7 @@ class Offers(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'), nullable=True)
+    offer_id = db.Column(db.Integer, db.ForeignKey('offers.id'), nullable=True)
     title = db.Column(db.String(75), nullable=False)
     comment_text = db.Column(db.String(500), nullable=False)
     review_image = db.Column(db.String(1000), nullable=True)
@@ -157,7 +166,7 @@ class Review(db.Model):
         return {
             "id": self.id,
             "user": User.query.get(self.user_id).serialize(),
-            "trip_id": self.trip_id,
+            "offer_id": self.offer_id,
             "title": self.title,
             "comment_text": self.comment_text,
             "review_image": self.review_image,
