@@ -21,7 +21,7 @@ export const ContactForm = () => {
         (result) => {
           // console.log(result.text);
           form.current.reset();
-          formMessage.innerHTML = '<p className="success">Message send</p>';
+          formMessage.innerHTML = '<p class="success">Message send</p>';
 
           setTimeout(() => {
             formMessage.innerHTML = "";
@@ -30,7 +30,7 @@ export const ContactForm = () => {
         (error) => {
           // console.log(error.text);
           formMessage.innerHTML =
-            '<p className="error">Error! Message not send, please try again!</p>';
+            '<p class="error">Error! Message not send, please try again!</p>';
           setTimeout(() => {
             formMessage.innerHTML = "";
           }, 2500);
@@ -39,7 +39,8 @@ export const ContactForm = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="container-signup">
+      <div className="content-signup">
       <form ref={form} onSubmit={sendEmail} className="form-content">
         <label>Nombre</label>
         <input type="text" name="name" required autoComplete="off" id="name" />
@@ -53,9 +54,10 @@ export const ContactForm = () => {
         />
         <label>Mensaje</label>
         <textarea name="message" id="mess" />
-        <input type="submit" value="Send" className="hover button" />
+        <input type="submit" value="Send" className="btn btn-primary reset-button-signup mt-2" />
       </form>
       <div className="formMessage"></div>
+      </div>
     </div>
   );
 };

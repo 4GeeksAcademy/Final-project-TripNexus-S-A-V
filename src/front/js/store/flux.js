@@ -748,12 +748,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getReviewsByOfferId: async (id) => {
-        console.log(id)
+        // console.log(id)
         try {
           const response = await fetch(API_URL + `/api/offer/${id}/reviews`);
           if (response.ok) {
             const data = await response.json();
-            console.log("reviews:", data);
+            // console.log("reviews:", data);
             return data;
           } else {
             return false;

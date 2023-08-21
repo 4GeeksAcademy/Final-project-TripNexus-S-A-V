@@ -14,7 +14,7 @@ const HomeReviewCard = () => {
     return (
         <div>
             <div className="home-offer-h1-review">
-                <h4><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h4>
+                <h3><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h3>
             </div>
 
             <div className='homeReviewCard'>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const PrivatePolitic = () => {
   return (
-    <div className='mx-y'>
+    <div className='container bg-white rounded-3'>
       <header>
         <h1 className='text-center my-5'>Política de Privacidad</h1>
       </header>

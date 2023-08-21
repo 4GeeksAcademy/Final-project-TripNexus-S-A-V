@@ -2,7 +2,7 @@ import React from 'react';
 
 const Cookies = () => {
   return (
-    <div className='mx-4'>
+    <div className='container bg-white rounded-3'>
       <header>
         <h1 className='text-center my-3'>Política de Cookies</h1>
       </header>

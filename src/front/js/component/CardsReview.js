@@ -63,7 +63,7 @@ const CardsReview = ({ searchQuery }) => {
                 </div>
               </div>
 
-              {store.user.id === review.user.id && (
+              {store.user.is_admin  && (
                 <div className="btn-review-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"

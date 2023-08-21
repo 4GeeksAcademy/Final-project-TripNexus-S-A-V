@@ -24,7 +24,7 @@ const HomeOfferCard = () => {
     return (
         <div>
             <div className='home-offer-h1'>
-                <h4><strong>Disfruta de las experiencias,</strong> encuentra excursiones y tours</h4>
+                <h3><strong>Disfruta de las experiencias,</strong> encuentra excursiones y tours</h3>
             </div>
 
             <div className='home-offer-card'>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const TermsConditions = () => {
     return (
-        <div className='container'>
+        <div className='container bg-white rounded-3'>
             <h1 className='mt-4'>Términos y Condiciones de Uso de Trip Nexus</h1>
             <h2>Fecha de entrada en vigor: 07/08/2023</h2>
             <br />

@@ -94,7 +94,7 @@ const SignUpUser = () => {
               timer: 1000
             });
             setTimeout(() => {
-              navigate("/business_offers");
+              navigate("/offers");
             }, 1000);
 
           })

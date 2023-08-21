@@ -33,7 +33,7 @@ const AllFavoritesReviews = ({ searchQuery }) => {
             >
               <div className="img-review">
                 <Link to={`/review/${favorites.review_id?.id}`}>
-                  <img src={favorites.review_id?.review_image} className="card-img-top" alt="imagen de reseña" />
+                  <img src={favorite?.review_id?.review_image} className="card-img-top" alt="imagen de reseña" />
                 </Link>
               </div>
               <div className='content-title-comment'>

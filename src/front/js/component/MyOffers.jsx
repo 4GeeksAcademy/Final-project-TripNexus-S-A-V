@@ -109,7 +109,7 @@ const MyOffers = ({ searchQuery }) => {
                                 }
 
                                 <Link to={`/offer/${business_offer.id}`}>
-                                    <button className='btn-details'>Detalles</button>
+                                    <button className='btn-details-big'>Detalles</button>
                                 </Link>
 
                             </div>

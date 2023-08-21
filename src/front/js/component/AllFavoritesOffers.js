@@ -118,7 +118,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                 }
 
 
-                                {store.user.username && <>
+                                {store.user.username || store.user.username.is_admin && <>
 
 
                                     <div className="fav-offer-div">
@@ -129,7 +129,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                         </div>
                                     </div>
                                     <Link to={`/offer/${favorite?.offer_id?.id}`}>
-                                        <button className='btn-details'>Detalles</button>
+                                        <button className='btn-details-big'>Detalles</button>
                                     </Link>
                                     <Link to='/opciones-de-pago'>
                                         <button className='btn-buy'>Comprar</button>
