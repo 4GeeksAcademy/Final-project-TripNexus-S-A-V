@@ -25,7 +25,7 @@ export const Home = () => {
           </Link>
         </div>
       }
-
+      
       <LitlleSlide />
       <FilterMenu />
       <HomeOfferCard />

@@ -95,7 +95,7 @@ const AllFavoritesOffers = ({ searchQuery }) => {
 
                                         </div>
                                     ) : (
-                                        <p className="card-text price-user"><u>Precio premium : <span className='price'>{favorite?.offer_id?.premium_user_price.toLocaleString()}$</span></u></p>
+                                        <p style= {{marginRight: "-7px"}} className="card-text price-user"><u>Precio premium : <span className='price'>{favorite?.offer_id?.premium_user_price.toLocaleString()}$</span></u></p>
                                     )}
                                 </div>
                                 {store.business_user.id === favorite?.offer_id?.business_id.id &&
@@ -118,9 +118,9 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                 }
 
 
-                                {store.user.username || store.user.username.is_admin && <>
-
-
+                                {store.user && 
+                                
+                                <>
                                     <div className="fav-offer-div">
                                         <div className="fav-offer-container">
                                             <span className="fav-offer-span">
@@ -129,14 +129,12 @@ const AllFavoritesOffers = ({ searchQuery }) => {
                                         </div>
                                     </div>
                                     <Link to={`/offer/${favorite?.offer_id?.id}`}>
-                                        <button className='btn-details-big'>Detalles</button>
+                                        <button className='btn-details'>Detalles</button>
                                     </Link>
                                     <Link to='/opciones-de-pago'>
                                         <button className='btn-buy'>Comprar</button>
                                     </Link>
                                     {/* <span><FavoriteOffer offerId={favorite?.offer_id?.id} /></span> */}
-
-
                                 </>
 
                                 }

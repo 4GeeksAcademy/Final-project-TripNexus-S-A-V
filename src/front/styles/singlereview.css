@@ -19,6 +19,17 @@
 
 .comment-single-review {
   word-wrap: break-word;
+  height: 75%;
+}
+
+.reviews-buttons {
+text-align: center;
+color: white;
+}
+
+.button-back{
+  text-align: end;
+  justify-content: end;
 }
 
 @media (max-width: 940px) {

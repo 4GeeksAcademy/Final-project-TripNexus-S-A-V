@@ -69,7 +69,8 @@ const AllFavoritesReviews = ({ searchQuery }) => {
                   )}
                 </div>
               </div>
-              {store.user.id === favorite.user_id && (
+              {/* {store.user.id === favorite.user_id && (
+                
                 <div className="btn-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"
@@ -84,11 +85,15 @@ const AllFavoritesReviews = ({ searchQuery }) => {
                     &#10008;
                   </button>
                 </div>
-              )}
+              )} */}
               <div className="likes card-likes">
                 <span className="author-review">
                   Publicado por : <span>{favorite.review_id?.user.username}</span>{" "}
                 </span>
+                <div className='reviews-buttons mt-1'>
+                  <Link to={`/offer/${favorite.offer_id}`} style={{ color: "white" }}>Oferta vinculada a la reseña</Link>
+                </div>
+
                 <div className="icons-review d-flex align-items-center justify-content-around">
                   <span className="me-3">
                     <FavoriteReview reviewId={favorite.review_id?.id} />

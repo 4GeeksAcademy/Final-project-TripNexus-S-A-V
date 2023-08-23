@@ -22,7 +22,7 @@ const HomeOfferCard = () => {
     }, [store.offers]);
 
     return (
-        <div>
+        <div style={{marginBottom: "3.5rem"}}>
             <div className='home-offer-h1'>
                 <h3><strong>Disfruta de las experiencias,</strong> encuentra excursiones y tours</h3>
             </div>
