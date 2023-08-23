@@ -382,6 +382,8 @@ def create_offer():
             offer_title=data['offer_title'],
             offer_little_description=data['offer_little_description'],
             offer_description=data['offer_description'],
+            included = data['included'],
+            not_included = data['not_included'],
             country=data['country'],
             city=data['city'],
             normal_user_price=data['normal_user_price'],
@@ -412,6 +414,8 @@ def update_offer(offer_id):
         offer.offer_title = data['offer_title'],
         offer.offer_little_description = data['offer_little_description'],
         offer.offer_description = data['offer_description'],
+        offer.included = data['included'],
+        offer.not_included = data['not_included']
         offer.country = data['country'],
         offer.city = data['city'],
         offer.normal_user_price = data['normal_user_price']

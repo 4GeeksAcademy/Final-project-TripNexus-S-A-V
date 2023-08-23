@@ -114,6 +114,8 @@ class Offers(db.Model):
     offer_title = db.Column(db.String(75), nullable=False)
     offer_little_description = db.Column(db.String(100), nullable=True)
     offer_description = db.Column(db.String(5000), nullable=False)
+    included = db.Column(db.String(5000), nullable=False)
+    not_included = db.Column(db.String(5000), nullable=False)
     country = db.Column(db.String(250), nullable=False)
     city = db.Column(db.String(250), nullable=False)
     normal_user_price = db.Column(db.Integer, nullable=False)
@@ -136,6 +138,8 @@ class Offers(db.Model):
             "offer_little_description": self.offer_little_description,
             "offer_title": self.offer_title,
             "offer_description": self.offer_description,
+            "included": self.included,
+            "not_included": self.not_included,
             "country": self.country,
             "city": self.city,
             "normal_user_price": self.normal_user_price,

@@ -39,7 +39,10 @@ const SignUpBusiness = () => {
         confirmPassword: Yup.string()
           .oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir')
           .required('Campo obligatorio'),
-        business_name: Yup.string().min(2, 'Debe tener 2 caracteres o más').matches(/^[A-Z][A-Za-z0-9,.*!¡?¿\s]*$/, 'Debe comenzar con una letra mayúscula').required('Campo obligatorio'),
+        business_name: Yup.string()
+          .min(2, 'Debe tener 2 caracteres o más')
+          .matches(/^[A-ZÁÉÍÓÚÜÑa-záéíóúüñ0-9,.*!¡?¿\s- ]*$/, 'Debe comenzar con una letra mayúscula')
+          .required('Campo obligatorio'),
         phone_prefix: Yup.string()
           .matches(/^\d+$/, 'Ingresa solo números')
           .min(2, 'Prefijo debe tener mínimo 2 dígitos')

@@ -87,7 +87,7 @@ const MyOffers = ({ searchQuery }) => {
 
                                         </div>
                                     ) : (
-                                        <p className="card-text price-user"><u>Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></u></p>
+                                        <p style= {{marginRight: "-7px"}} className="card-text price-user"><u>Precio premium : <span className='price'>{business_offer.premium_user_price.toLocaleString()}$</span></u></p>
                                     )}
                                 </div>
                                 {store.business_user.id === business_offer.business_id.id &&

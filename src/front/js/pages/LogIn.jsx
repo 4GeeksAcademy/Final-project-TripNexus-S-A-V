@@ -18,7 +18,7 @@ const LogIn = () => {
         password: ""
       }}
       validationSchema={Yup.object({
-        email: Yup.string().email('Invalid email address').required('Obligatorio'),
+        email: Yup.string().email('Dirección de correo electrónico erróneo').required('Obligatorio'),
         password: Yup.string().min(8, 'Debe tener 8 caracteres o más').required('Obligatorio'),
       })}
       onSubmit={async (values, { setSubmitting }) => {
@@ -40,7 +40,7 @@ const LogIn = () => {
           } else {
             setTimeout(() => {
               Swal.fire({
-                title: "Email and/or password are incorrect",
+                title: "Email o contraseña incorrectos",
                 text: '',
                 icon: 'error',
                 timer: 2000

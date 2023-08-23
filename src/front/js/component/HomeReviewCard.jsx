@@ -12,7 +12,7 @@ const HomeReviewCard = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{marginBottom: "3.5rem"}}>
             <div className="home-offer-h1-review">
                 <h3><strong>Lo que más gustó a otros clientes:</strong> revisa las últimas reseñas</h3>
             </div>

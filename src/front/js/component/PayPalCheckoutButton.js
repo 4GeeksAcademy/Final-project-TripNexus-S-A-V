@@ -16,7 +16,7 @@ const PaypalCheckoutButton = (props) => {
     setTimeout(() => {
       Swal.fire({
         title: "¡Disfruta del viaje!",
-        text: "Disfruta del viaje!",
+        text: "¡Disfruta del viaje!",
         icon: "success",
         timer: 1000
       });

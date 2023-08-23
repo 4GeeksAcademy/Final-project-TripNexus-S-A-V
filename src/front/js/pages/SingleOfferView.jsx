@@ -25,7 +25,7 @@ const SingleOfferView = () => {
         // console.log("Fetch for all offers in single offer view is working");
     }, []);
 
-    console.log(reviews)
+    // console.log(reviews)
 
     return (
         <div className='single-offer-view'>
@@ -59,19 +59,22 @@ const SingleOfferView = () => {
 
                     <div className='mt-3'>
                         <h4>Mira las opciones de esta actividad y ¡elige la tuya!</h4>
-                        <span>Precio para usuario normal: {offer?.normal_user_price}</span><br />
-                        <span>Precio de usuario premium: {offer?.premium_user_price}</span>
+                        <span>Precio para usuario normal: {offer?.normal_user_price} $</span><br />
+                        <span>Precio de usuario premium: {offer?.premium_user_price} $</span>
                     </div>
 
                     <div className='mt-3'>
-                        {/* <h4>Que saber antes de comprar</h4>
 
-                    <div className='d-flex'>
+                        {/* <h4>Que saber antes de comprar</h4> */}
+
+                    <div>
                         <h4>¿Qué incluye?</h4>
+                        <p>{offer?.included}</p>
                         <h4>¿Qué no incluye?</h4>
+                        <p> {offer?.not_included} </p>
                     </div>
 
-                    <div className='mt-3'><h4>Medidas de higiene y seguridad</h4></div> */}
+                    {/* <div className='mt-3'><h4>Medidas de higiene y seguridad</h4></div> */}
 
                         <div><h4>Política de cancelación
                         </h4>

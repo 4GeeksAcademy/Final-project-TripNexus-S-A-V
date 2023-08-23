@@ -25,6 +25,8 @@ const OffersDoubleModal = () => {
                 offer_title: "",
                 offer_little_description: "",
                 offer_description: "",
+                included: "",
+                not_included: "",
                 country: "",
                 city: "",
                 normal_user_price: "",
@@ -38,14 +40,24 @@ const OffersDoubleModal = () => {
                     .required('Campo obligatorio!'),
                 offer_little_description: Yup.string()
                     .min(10, 'Debe tener 10 caracteres o más')
-                    .max(70, 'Máximo 100 carácteres. Intenta resumir al máximo la esencia de la oferta ')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .max(70, 'Máximo 70 carácteres. Intenta resumir al máximo la esencia de la oferta ')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:()/]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
                 offer_description: Yup.string()
                     .min(50, 'Debe tener 50 caracteres o más')
                     .max(3000, 'Máximo 3000 carácteres')
-                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:() ]*$/, 'Debe comenzar con una letra mayúscula')
+                    .matches(/^[A-ZÁÉÍÓÚÑ][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:()/]*$/, 'Debe comenzar con una letra mayúscula')
                     .required('Campo obligatorio!'),
+                included: Yup.string()
+                    .min(10, 'Debe tener 10 caracteres o más')
+                    .max(3000, 'Máximo 3000 caracteres')
+                    .matches(/^[A-ZÁÉÍÓÚÑ-][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:()/]*$/, 'Debe comenzar con una letra mayúscula')
+                    .required('Campo obligatorio!'),
+                not_included: Yup.string()
+                    .min(8, 'Debe tener 8 caracteres o más')
+                    .max(3000, 'Máximo 3000 caracteres')
+                    .matches(/^[A-ZÁÉÍÓÚÑ-][A-Za-zÁÉÍÓÚáéíóúÑñ0-9,.*!¡?¿\s-:()/]*$/, 'Debe comenzar con una letra mayúscula')
+                    .required('Campo obligatorio!'),                
                 country: Yup.string()
                     // .min(2, 'Debe tener 2 caracteres o más')
                     .required('Campo obligatorio!'),
@@ -64,7 +76,7 @@ const OffersDoubleModal = () => {
                     .typeError('Debe ser un número'),
                 offer_image: Yup.mixed()
                     .required('Debes seleccionar al menos una imagen!')
-                    .test("FILE_SIZE", "El tamaño de la imagen es demasiado grande!", value => value && value.size < 400 * 400)
+                    .test("FILE_SIZE", "El tamaño de la imagen es demasiado grande!", value => value && value.size < 3000 * 3000)
                     .test("FILE_TYPE", "Formato inválido", value => value && ['image/png', 'image/jpeg', 'image/jpg'].includes(value.type))
             })}
             onSubmit={async (values, { setSubmitting, setStatus }) => {
@@ -193,7 +205,7 @@ const OffersDoubleModal = () => {
                                                 <ErrorMessage name="offer_title" />
                                             </div>
                                             <div className='custom-input-password'>
-                                                <label htmlFor="offer_little_description" className={formik.values.offer_little_description ? 'input-label has-value' : 'input-label'}>Escribe una breve descripción de tu oferta:</label>
+                                                <label htmlFor="offer_little_description" style={{ whiteSpace: 'pre-line' }} className={formik.values.offer_little_description ? 'input-label has-value' : 'input-label'}>Escribe una breve descripción de tu oferta:</label>
                                                 <Field
                                                     as="textarea"
                                                     name="offer_little_description"
@@ -203,7 +215,7 @@ const OffersDoubleModal = () => {
                                             </div>
 
                                             <div className='custom-input-password'>
-                                                <label htmlFor="offer_description" className={formik.values.offer_description ? 'input-label has-value' : 'input-label'}>
+                                                <label htmlFor="offer_description" style={{ whiteSpace: 'pre-line' }} className={formik.values.offer_description ? 'input-label has-value' : 'input-label'}>
                                                     Escribe la información detallada de la oferta:</label>
                                                 <Field
                                                     as="textarea"
@@ -211,6 +223,28 @@ const OffersDoubleModal = () => {
                                                     className={formik.values.offer_description ? 'expanding-textarea' : 'expanding-textarea input-placeholder'}
                                                 />
                                                 <ErrorMessage style={{ color: 'red' }} name="offer_description" />
+                                            </div>
+
+                                            <div className='custom-input-password'>
+                                                <label htmlFor="included" style={{ whiteSpace: 'pre-line' }} className={formik.values.included ? 'input-label has-value' : 'input-label'}>
+                                                    ¿Qué está incluido en la oferta?</label>
+                                                <Field
+                                                    as="textarea"
+                                                    name="included"
+                                                    className={formik.values.included ? 'expanding-textarea' : 'expanding-textarea input-placeholder'}
+                                                />
+                                                <ErrorMessage style={{ color: 'red' }} name="included" />
+                                            </div>
+
+                                            <div className='custom-input-password'>
+                                                <label htmlFor="not_included" style={{ whiteSpace: 'pre-line' }} className={formik.values.not_included ? 'input-label has-value' : 'input-label'}>
+                                                    ¿Qué no está incluido en la oferta?</label>
+                                                <Field
+                                                    as="textarea"
+                                                    name="not_included"
+                                                    className={formik.values.not_included ? 'expanding-textarea' : 'expanding-textarea input-placeholder'}
+                                                />
+                                                <ErrorMessage style={{ color: 'red' }} name="not_included" />
                                             </div>
 
 

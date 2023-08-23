@@ -66,7 +66,7 @@ const MyReviews = ({ searchQuery }) => {
                 )}
               </div>
             </div>
-            {store.user.is_admin ||store.user.id === review.user.id  && (
+            {store.user.is_admin || store.user.id === review.user.id && (
               <div className="btn-options d-flex justify-content-end">
                 <button
                   className="btn-up-review"
@@ -86,6 +86,9 @@ const MyReviews = ({ searchQuery }) => {
               <span className="author-review">
                 Publicado por : <span>{review.user.username}</span>{" "}
               </span>
+              <div className='reviews-buttons mt-1'>
+                <Link to={`/offer/${review.offer_id}`} style={{ color: "white" }}>Oferta vinculada a la reseña</Link>
+              </div>
               <div className="icons-review d-flex align-items-center justify-content-around">
                 <span className="me-3">
                   <FavoriteReview reviewId={review.id} />

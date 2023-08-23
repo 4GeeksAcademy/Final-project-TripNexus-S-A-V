@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import Likes from "./Likes";
 import useReviewManagement from "../hooks/useReviewManagement";
@@ -8,6 +8,17 @@ import { Link } from "react-router-dom";
 const CardsReview = ({ searchQuery }) => {
   const { store } = useContext(Context);
   const { handleUpdate, handleSave, handleDelete, reviews, editContent, editContentId, editTitle, handleEditContent } = useReviewManagement();
+  const [offer, setOffer] = useState({})
+
+  useEffect(() => {
+    const loadData = async () => {
+      setReview(await actions.getReviewById(params.review_id));
+      setOffer(await actions.getOfferById(params.offer_id));
+    }
+    loadData()
+    // console.log("Fetch for all reviews in single review view is working");
+  }, []);
+
 
   return (
     <div>
@@ -58,12 +69,17 @@ const CardsReview = ({ searchQuery }) => {
                       <button onClick={() => handleSave(review.id)}>Validar</button>
                     </>
                   ) : (
-                    <p className="card-text">{review.comment_text}</p>
+                    <>
+                      <p className="card-text" >{review.comment_text}</p>
+                    </>
+
+
                   )}
                 </div>
+
               </div>
 
-              {store.user.is_admin  && (
+              {store.user.is_admin && (
                 <div className="btn-review-options d-flex justify-content-end">
                   <button
                     className="btn-up-review"
@@ -84,6 +100,9 @@ const CardsReview = ({ searchQuery }) => {
                 <span className="author-review">
                   Publicado por : <span>{review.user.username}</span>{" "}
                 </span>
+                <div className='reviews-buttons mt-1'>
+                  <Link to={`/offer/${review.offer_id}`} style={{ color: "white" }}>Oferta vinculada a la reseña</Link>
+                </div>
                 <div className="icons-review d-flex align-items-center justify-content-around">
                   <span className="me-3">
                     <FavoriteReview reviewId={review.id} />
